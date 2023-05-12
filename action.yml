@@ -1,0 +1,6 @@
+name: Processing Build Checker
+description: "Builds processing project and creates annotations for any errors"
+runs:
+  using: "node16"
+  main: "index.js"
+ 
