@@ -34,7 +34,7 @@ function checkIfFileExists(file) {
 
 function createAnnotations(errors, filePath) {
 
-    async () => {
+    
 
         try {
 
@@ -71,7 +71,7 @@ function createAnnotations(errors, filePath) {
             core.setFailed(error.message);
         }
     }
-}
+
 function getFileName(error) {
 
 
