@@ -1,5 +1,12 @@
 name: Processing Build Checker
 description: "Builds processing project and creates annotations for any errors"
+
+inputs:
+  repo-token:
+    description: "The repository token"
+    required: true
+    default: ${{ github.token }}
+
 runs:
   using: "node16"
   main: "index.js"

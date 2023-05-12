@@ -7,7 +7,35 @@ const github = require('@actions/github');
 
         try {
 
-            core.notice('Hello World!');
+          const token = core.getInput('repo-token');
+          const octokit = github.getOctokit(token);
+          
+            // call octokit to create a check with annoation details 
+            const check = await octokit.checks.create({
+                owner: github.context.repo.owner,
+                repo: github.context.repo.repo,
+                name: 'My check',
+                head_sha: github.context.sha,
+                status: 'completed',
+                conclusion: 'failure',
+                output: {
+                    title: 'My check',
+                    summary: 'My check failed', 
+                    annotations: [
+                        {
+                            path: 'Mouth.pde',
+                            start_line: 5,
+                            end_line: 5,
+                            annotation_level: 'failure',
+                            message: 'My check failed'
+                        
+                        }
+                    ]
+                }
+            });
+
+            
+            
         } catch (error) {
             core.setFailed(error.message);
         }
