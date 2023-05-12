@@ -6,7 +6,7 @@ const fs = require('fs');
 const fileInputPath = core.getInput('file-input');
 
 directory = "/Users/adamfulton/Documents/Development/univesity/teaching/processing-pmd/BuildChecker/NewtonPineappleAnimation";
-const command = "processing-java " +  "--sketch=" + directory + " --build";
+const command = "ls";
 
 exec(command, (error, stdout, stderr) => {
     if (error) {
