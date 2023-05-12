@@ -6,6 +6,9 @@ inputs:
     description: "The repository token"
     required: true
     default: ${{ github.token }}
+  file-input:
+    description: 'Path to the input file'
+    required: true
 
 runs:
   using: "node16"
