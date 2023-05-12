@@ -1,35 +1,26 @@
 const core = require('@actions/core');
 const github = require('@actions/github');
 const fs = require('fs');
-const exec = require('@actions/exec');
 
 
 const fileInputPath = core.getInput('file-input');
-
-const command = "cd processing/processing-3.5.4/ && ./processing-java " +  "--sketch=" + fileInputPath + " --build";
-
-exec.exec(command, (error, stdout, stderr) => {
-    if (error) {
-  
-    
-       const errorArray = []
-      
-      console.error(`${error}`);
-      core.setFailed(error.message.toString());
-     const errorParts = error.toString().split('\n');
-     
-     
-      errorArraypush.push(getFileName(errorParts[1]));
-      errorArray.push(getLineNumber(errorParts[1]));
-      errorArray.push(getMessage(errorParts[1]));
-      createAnnotations(errorArray, file);
-  
+const projectInputPath = core.getInput('project-input');
+checkIfFileExists(fileInputPath);
+const errorArray = [];
+fs.readFile('./output.txt', 'utf8', (err, data) => {
+    if (err) {
+      console.error(err);
       return;
     }
   
-    // Print the output
-    console.log(stdout);
+    errorArray.push(getFileName(data));
+    errorArray.push(getLineNumber(data));
+    errorArray.push(getMessage(data));
+    createAnnotations(errorArray, projectInputPath);
+
   });
+  
+   
 
 
 
@@ -37,6 +28,7 @@ function checkIfFileExists(file) {
 
     if (!fs.existsSync(file)) {
         core.setFailed(`File not found: ${fileInputPath}`);
+        return;
     }
 }
 
