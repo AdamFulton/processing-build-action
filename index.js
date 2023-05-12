@@ -6,7 +6,7 @@ const exec = require('@actions/exec');
 
 const fileInputPath = core.getInput('file-input');
 
-const command = "cd ./processing/processing-3.5.4/ && processing-java " +  "--sketch=" + fileInputPath + " --build";
+const command = "cd processing/processing-3.5.4/ && ./processing-java " +  "--sketch=" + fileInputPath + " --build";
 
 exec.exec(command, (error, stdout, stderr) => {
     if (error) {
