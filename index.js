@@ -77,7 +77,7 @@ function getFileName(error) {
 
     retval = error.split(":");
   
-    return retval[0];
+    return retval[0].split("\n")[1];
 }
 
 function getLineNumber(error) {
