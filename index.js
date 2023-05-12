@@ -11,7 +11,7 @@ const github = require('@actions/github');
           const octokit = github.getOctokit(token);
           
             // call octokit to create a check with annoation details 
-            const check = await octokit.checks.create({
+            const check = await octokit.rest.checks.create({
                 owner: github.context.repo.owner,
                 repo: github.context.repo.repo,
                 name: 'My check',
