@@ -23,7 +23,7 @@ const github = require('@actions/github');
                     summary: 'My check failed', 
                     annotations: [
                         {
-                            path: 'Test.pde',
+                            path: 'NewtonPineappleAnimation/Mouth.pde',
                             start_line: 8,
                             end_line: 8,
                             annotation_level: 'failure',
