@@ -1,15 +1,14 @@
 const core = require('@actions/core');
 const github = require('@actions/github');
-const exec = require('@actions/exec');
 const fs = require('fs');
+const exec = require('@actions/exec');
 
 
 const fileInputPath = core.getInput('file-input');
 
-directory = "/Users/adamfulton/Documents/Development/univesity/teaching/processing-pmd/BuildChecker/NewtonPineappleAnimation";
-const command = "ls";
+const command = "processing-java " +  "--sketch=" + fileInputPath + " --build";
 
-await exec.exec(command, (error, stdout, stderr) => {
+exec.exec(command, (error, stdout, stderr) => {
     if (error) {
   
     
