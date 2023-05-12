@@ -7,7 +7,7 @@ const fileInputPath = core.getInput('file-input');
 const projectInputPath = core.getInput('project-input');
 checkIfFileExists(fileInputPath);
 const errorArray = [];
-fs.readFile('./output.txt', 'utf8', (err, data) => {
+fs.readFile(fileInputPath, 'utf8', (err, data) => {
     if (err) {
       console.error(err);
       return;
