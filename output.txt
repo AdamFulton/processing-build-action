@@ -1,2 +1,1 @@
-expecting SEMI, found 'strokeWeight'
-Mouth.pde:25:6:25:6: Syntax error, maybe a missing semicolon?
+Finished.

@@ -2,13 +2,21 @@ const fs = require('fs');
 
 fs.readFile('./output.txt', 'utf8', (err, data) => {
   if (err) {
+
+    
     console.error(err);
     return;
   }
 
+  if (!data.includes("Finished")) {
+  
+
   console.log(getFileName(data));
   console.log(getLineNumber(data));
   console.log(getMessage(data));
+  } else {
+    console.log("Finished")
+  }
 });
 
 function getFileName(error) {

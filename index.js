@@ -12,12 +12,15 @@ fs.readFile(fileInputPath, 'utf8', (err, data) => {
       console.error(err);
       return;
     }
+
+
+    if (!data.includes("Finished")) {
   
     errorArray.push(getFileName(data));
     errorArray.push(getLineNumber(data));
     errorArray.push(getMessage(data));
     createAnnotations(errorArray, projectInputPath);
-
+    }
   });
   
    
@@ -65,7 +68,7 @@ async function createAnnotations(errors, filePath) {
                 }
             });
 
-            
+            core.setFailed(`proccesing-build-checker Failed due to: ${errors[2].toString()}`)
             
         } catch (error) {
             core.setFailed(error.message);
@@ -77,7 +80,7 @@ function getFileName(error) {
 
     retval = error.split(":");
   
-    return retval[0].split("\n")[1];
+    return retval[0];
 }
 
 function getLineNumber(error) {
