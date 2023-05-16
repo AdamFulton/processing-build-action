@@ -54,11 +54,11 @@ function createAnnotations(errors, filePath) {
                     summary: 'proccesing-build-checker Failed', 
                     annotations: [
                         {
-                            path: filePath + "/" + errors[0],
-                            start_line: errors[1],
-                            end_line: errors[1],
+                            path: filePath.toString() + "/" + errors[0].toString(),
+                            start_line: parseInt(errors[1]),
+                            end_line: parseInt(errors[1]),
                             annotation_level: 'failure',
-                            message: errors[2]
+                            message: errors[2].toString()
                         
                         }
                     ]
