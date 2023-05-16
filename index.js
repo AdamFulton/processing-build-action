@@ -88,7 +88,7 @@ function getLineNumber(error) {
     retval = error.split(":");
    
 
-    return retval[1] - 1;
+    return retval[1];
 }
 function getMessage(error) {
 
