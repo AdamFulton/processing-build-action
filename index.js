@@ -4,7 +4,7 @@ const fs = require('fs');
 
 
 const fileInputPath = core.getInput('file-input');
-const projectInputPath = core.getInput('project-input');
+const projectInputPath = core.getInput('path-input');
 checkIfFileExists(fileInputPath);
 const errorArray = [];
 fs.readFile(fileInputPath, 'utf8', (err, data) => {
