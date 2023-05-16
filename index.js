@@ -32,7 +32,7 @@ function checkIfFileExists(file) {
     }
 }
 
-function createAnnotations(errors, filePath) {
+async function createAnnotations(errors, filePath) {
 
     
 
