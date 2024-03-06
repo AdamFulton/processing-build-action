@@ -1,6 +1,11 @@
 const core = require('@actions/core');
 const github = require('@actions/github');
 const fs = require('fs');
+const { exec } = require('child_process');
+
+const sketchPath = './project_code/Thing008';
+const buildCommand = `processing-java --sketch=${sketchPath} --build > build.txt 2>&1 || true`;
+
 
 
 const projectInputPath = core.getInput('path-input');
@@ -9,6 +14,16 @@ const errorArray = [];
 let data = ""
 
 const rootPath = './project_code';
+
+exec(buildCommand, (error, stdout, stderr) => {
+    if (error) {
+      console.error(`Error: ${error.message}`);
+      return;
+    }
+  
+    console.log(`stdout: ${stdout}`);
+    console.error(`stderr: ${stderr}`);
+  });
 
 fs.readdir(rootPath, (err, files) => {
   if (err) {
