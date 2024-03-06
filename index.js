@@ -8,13 +8,27 @@ const errorArray = [];
 
 let data = ""
 
-    if (!data.includes("Finished")) {
+const rootPath = '/';
+
+fs.readdir(rootPath, (err, files) => {
+  if (err) {
+    console.error('Error reading directory:', err);
+    return;
+  }
+
+  console.log('Files in the root directory:');
+  files.forEach(file => {
+    console.log(file);
+  });
+});
+
+  //  if (!data.includes("Finished")) {
   
-    errorArray.push(getFileName(data));
-    errorArray.push(getLineNumber(data));
-    errorArray.push(getMessage(data));
-    createAnnotations(errorArray, projectInputPath);
-    }
+  //  errorArray.push(getFileName(data));
+    //errorArray.push(getLineNumber(data));
+   // errorArray.push(getMessage(data));
+   // createAnnotations(errorArray, projectInputPath);
+  //  }
   
    
 async function createAnnotations(errors, filePath) {
