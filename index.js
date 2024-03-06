@@ -4,7 +4,7 @@ const fs = require('fs');
 const { exec } = require('child_process');
 
 const sketchPath = './project_code/Thing008';
-const buildCommand = `processing-java > t.txt`;
+const buildCommand = `processing-java > ./project_code/build.txt`;
 
 
 
