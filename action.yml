@@ -5,10 +5,7 @@ inputs:
   repo-token:
     description: "The repository token"
     required: true
-    default: ${{ github.token }}
-  file-input:
-    description: 'Path to the input file'
-    required: true
+    default: ${{ github.token }} 
   path-input:
     description: 'Path to the project'
     required: true

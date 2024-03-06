@@ -3,16 +3,10 @@ const github = require('@actions/github');
 const fs = require('fs');
 
 
-const fileInputPath = core.getInput('file-input');
 const projectInputPath = core.getInput('path-input');
-checkIfFileExists(fileInputPath);
 const errorArray = [];
-fs.readFile(fileInputPath, 'utf8', (err, data) => {
-    if (err) {
-      console.error(err);
-      return;
-    }
 
+let data = ""
 
     if (!data.includes("Finished")) {
   
@@ -21,24 +15,11 @@ fs.readFile(fileInputPath, 'utf8', (err, data) => {
     errorArray.push(getMessage(data));
     createAnnotations(errorArray, projectInputPath);
     }
-  });
   
    
-
-
-
-function checkIfFileExists(file) {
-
-    if (!fs.existsSync(file)) {
-        core.setFailed(`File not found: ${fileInputPath}`);
-        return;
-    }
-}
-
 async function createAnnotations(errors, filePath) {
 
     
-
         try {
 
           const token = core.getInput('repo-token');
