@@ -8,7 +8,7 @@ const errorArray = [];
 
 let data = ""
 
-const rootPath = '/';
+const rootPath = './project_code';
 
 fs.readdir(rootPath, (err, files) => {
   if (err) {
