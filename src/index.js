@@ -15,13 +15,9 @@ createAnnotations();
 async function createAnnotations() {
   let errors = await ConstructAnnotationsAsync(projectInputPath);
 
-  
+  for (const error of errors) {
     try {
-
-
-        for(const error of errors){
-
-        const token = core.getInput("repo-token");
+      const token = core.getInput("repo-token");
       const octokit = github.getOctokit(token);
 
       // call octokit to create a check with annoation details
@@ -46,12 +42,12 @@ async function createAnnotations() {
           ],
         },
       });
-    }
-        if (errors.length > 0) {
-          core.setFailed("proccesing-build-checker Failed with errors");
-        }
+
+      core.setFailed(
+        `proccesing-build-checker Failed due to: ${error.message} at ${error.path}:${error.line}`
+      );
     } catch (error) {
       console.error(error);
     }
   }
-
+}
