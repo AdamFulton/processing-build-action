@@ -104,8 +104,8 @@ function getLineNumber(error) {
  * @returns {string} - The path to the Processing sketch
  */
 function getSketchPath(cmd) {
-  retval = cmd.split("--sketch=")[1].split(" ");
-  return retval[0];
+  retval = cmd.split("--sketch=")[1].split(" ")[0].split("project_code/");
+  return retval[1];
 }
 
 /**

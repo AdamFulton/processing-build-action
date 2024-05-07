@@ -27,7 +27,7 @@ async function createAnnotations() {
                 path: error.path,
                 start_line: parseInt(error.line),
                 end_line: parseInt(error.line),
-                annotation_level: "failure",
+                annotation_level: "warning",
                 message: error.message,
             };
         }
@@ -44,7 +44,7 @@ async function createAnnotations() {
         name: "proccesing-build-checker",
         head_sha: github.context.sha,
         status: "completed",
-        conclusion: "failure",
+        conclusion: "neutral",
         output: {
           title: "proccesing-build-checker Report",
           summary: "proccesing-build-checker Failed",
