@@ -13,13 +13,27 @@ createAnnotations();
  * @throws {Error} - Throws an error if the build process fails
  */
 async function createAnnotations() {
+    
   let errors = await ConstructAnnotationsAsync(projectInputPath);
 
- 
+    
+        if (errors.length === 0) {
+
+            return;
+        }
+
+        const annotations = errors.map((error) => {
+            return {
+                path: error.path,
+                start_line: parseInt(error.line),
+                end_line: parseInt(error.line),
+                annotation_level: "failure",
+                message: error.message,
+            };
+        }
+        );
+
     try {
-
-        for(const error of errors){
-
       const token = core.getInput("repo-token");
       const octokit = github.getOctokit(token);
 
@@ -34,26 +48,16 @@ async function createAnnotations() {
         output: {
           title: "proccesing-build-checker Report",
           summary: "proccesing-build-checker Failed",
-          annotations: [
-            {
-              path: error.path,
-              start_line: parseInt(error.line),
-              end_line: parseInt(error.line),
-              annotation_level: "failure",
-              message: error.message,
-            },
-          ],
+          annotations: annotations
         },
-      });
-    }
 
-    if (errors.length > 0) {
+      });
       core.setFailed(
        "proccesing-build-checker failed. Please check the annotations for more details."
       );
-    }
+
     } catch (error) {
       console.error(error);
     }
-  }
+}
 
