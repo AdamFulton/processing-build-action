@@ -1,7 +1,8 @@
 const fs = require('fs');
 const path = require('path');
 const { exec } = require('child_process');
-
+const util = require('util');
+const execPromise = util.promisify(exec);
 /**
  * Finds all Processing sketches in a directory
  * @param {string} dir - The directory to search
@@ -29,4 +30,26 @@ function findProcessingSketches(dir,sketchPaths = []) {
     }
     return sketchPaths;
 }
-module.exports = {findProcessingSketches};
+
+async function buildProcessing(sketches) {
+    
+        let errors = []
+
+        for (const sketch of sketches) {
+            const command = `processing-java --sketch=${sketch} --build`;
+
+            try {
+               
+                await  execPromise(command);
+              
+            } catch (error) {
+
+                errors.push({
+                    message: error.stderr,
+                    cmd: error.cmd, 
+                })
+            }
+        }
+
+    return errors;
+}
