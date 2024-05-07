@@ -56,41 +56,36 @@ async function buildProcessingAsync(sketches) {
  * @returns {Array} - An array of annotations for the errors that occurred during the build process
  * @async
  */
-async function ConstructAnnotationsAsync(rootPath){
-    
-    const files = findProcessingSketches(rootPath);
-    
-    let retval = []
-    
-    try {
-        const errors = await buildProcessingAsync(files);
-        
-        for(const error of errors) { 
+async function ConstructAnnotationsAsync(rootPath) {
+  const files = findProcessingSketches(rootPath);
 
-            if (error.message.includes('Not a valid sketch folder')) {
-                
-                retval.push({
-                    message: "Not a valid sketch folder",
-                    path: getSketchPath(error.cmd) + "/"+ getFileName(error.message),
-                    line: "0",
-                });
-                continue;
-            }
+  let retval = [];
 
-            retval.push({
-                message: getMessage(error.message),
-                path: getSketchPath(error.cmd) + "/"+ getFileName(error.message),
-                line: getLineNumber(error.message),
-            });
-        }
+  try {
+    const errors = await buildProcessingAsync(files);
 
-    } catch (error) {
-        console.error('An error occurred:', error);
+    for (const error of errors) {
+      if (error.message.includes("Not a valid sketch folder")) {
+        retval.push({
+          message: "Not a valid sketch folder",
+          path: getSketchPath(error.cmd) + "/" + getFileName(error.message),
+          line: "0",
+        });
+        continue;
+      }
+
+      retval.push({
+        message: getMessage(error.message),
+        path: getSketchPath(error.cmd) + "/" + getFileName(error.message),
+        line: getLineNumber(error.message),
+      });
     }
+  } catch (error) {
+    console.error("An error occurred:", error);
+  }
 
-    return retval
+  return retval;
 }
-
 
 /**
  * Parses the error message from the processing-java command to extract the line number
@@ -137,4 +132,12 @@ function getMessage(error) {
   return retval[5];
 }
 
-ConstructAnnotationsAsync("/users/adamfulton/Desktop/");
+module.exports = {
+  ConstructAnnotationsAsync,
+  getLineNumber,
+  getSketchPath,
+  getFileName,
+  getMessage,
+  findProcessingSketches,
+  buildProcessingAsync,
+};

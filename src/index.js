@@ -4,11 +4,7 @@ const { constructAnnotationsAsync } = require("./processingHelper.js");
 
 const projectInputPath = core.getInput("path-input");
 
-
 createAnnotations();
-
-
-
 
 /**
  * Creates annotations for the errors that occurred during the build process
@@ -48,7 +44,7 @@ async function createAnnotations() {
       });
 
       core.setFailed(
-        `proccesing-build-checker Failed due to: ${errors[2].toString()}`
+        `proccesing-build-checker Failed due to: ${error.message} at ${error.path}:${error.line}`
       );
     } catch (error) {
       console.error(error);
