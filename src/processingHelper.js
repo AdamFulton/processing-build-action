@@ -73,11 +73,11 @@ async function ConstructAnnotationsAsync(rootPath) {
       if (error.message.includes("Not a valid sketch folder")) {
          continue;
       }
-
-      console.log("message: " + getMessage(error.message));
-        console.log("file: " + getFileName(error.message));
-        console.log("line: " + getLineNumber(error.message));
-        console.log("path: " + getSketchPath(error.cmd) + "/" + getFileName(error.message)); 
+      retval.push({
+        message: getMessage(error.message),
+        path: getSketchPath(error.cmd) + "/"+ getFileName(error.message),
+        line: getLineNumber(error.message)
+        }); 
       
     }
   } catch (error) {
