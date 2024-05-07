@@ -13,7 +13,7 @@ createAnnotations();
  * @throws {Error} - Throws an error if the build process fails
  */
 async function createAnnotations() {
-  let errors = await constructAnnotationsAsync(projectInputPath);
+  let errors = await ConstructAnnotationsAsync(projectInputPath);
 
  
     try {
