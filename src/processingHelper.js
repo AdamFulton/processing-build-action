@@ -30,8 +30,9 @@ function findProcessingSketches(dir, sketchPaths = []) {
  * Builds Processing sketches using the processing-java command
  * @param {*} sketches
  * @returns {Array} - An array of errors that occurred during the build process
+ * @async
  */
-async function buildProcessing(sketches) {
+async function buildProcessingAsync(sketches) {
   let errors = [];
 
   for (const sketch of sketches) {
@@ -55,26 +56,28 @@ async function buildProcessing(sketches) {
  * @returns {Array} - An array of annotations for the errors that occurred during the build process
  * @async
  */
-async function ConstructAnnotationsAsync(errors){
+async function ConstructAnnotationsAsync(rootPath){
     
-    let errors = []
+    const files = findProcessingSketches(rootPath);
+    
+    let retval = []
     
     try {
-        const errors = await buildProcessing(files);
+        const errors = await buildProcessingAsync(files);
         
         for(const error of errors) { 
 
             if (error.message.includes('Not a valid sketch folder')) {
                 
-                errors.push({
+                retval.push({
                     message: "Not a valid sketch folder",
                     path: getSketchPath(error.cmd) + "/"+ getFileName(error.message),
-                    line: 0,
+                    line: "0",
                 });
                 continue;
             }
 
-            errors.push({
+            retval.push({
                 message: getMessage(error.message),
                 path: getSketchPath(error.cmd) + "/"+ getFileName(error.message),
                 line: getLineNumber(error.message),
@@ -84,6 +87,8 @@ async function ConstructAnnotationsAsync(errors){
     } catch (error) {
         console.error('An error occurred:', error);
     }
+
+    return retval
 }
 
 
@@ -131,3 +136,5 @@ function getMessage(error) {
   }
   return retval[5];
 }
+
+ConstructAnnotationsAsync("/users/adamfulton/Desktop/");
