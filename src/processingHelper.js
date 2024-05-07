@@ -7,10 +7,11 @@ const execPromise = util.promisify(exec);
  * Finds all Processing sketches in a directory
  * @param {string} dir - The directory to search
  * @param {Array} sketchPaths - The array to store the paths of the Processing sketches
- * @returns {Array} - An array of paths to Processing sketches
+ * @returns {Set} - A set of paths to Processing sketches
  */
-function findProcessingSketches(dir, sketchPaths = []) {
+function findProcessingSketches(dir, sketchPaths = new Set()) {
   const files = fs.readdirSync(dir);
+  let foundPDEFile = false; 
 
   for (const file of files) {
     const filePath = path.join(dir, file);
@@ -20,15 +21,19 @@ function findProcessingSketches(dir, sketchPaths = []) {
     if (stats.isDirectory()) {
       findProcessingSketches(filePath, sketchPaths);
     } else if (file.endsWith(".pde")) {
-      sketchPaths.push(dir);
+        foundPDEFile = true;
     }
+
+    if (foundPDEFile) {
+    sketchPaths.add(dir);
+  }
   }
   return sketchPaths;
 }
 
 /**
  * Builds Processing sketches using the processing-java command
- * @param {*} sketches
+ * @param {Set} sketches - A set of paths to Processing sketches
  * @returns {Array} - An array of errors that occurred during the build process
  * @async
  */
@@ -66,19 +71,14 @@ async function ConstructAnnotationsAsync(rootPath) {
 
     for (const error of errors) {
       if (error.message.includes("Not a valid sketch folder")) {
-        retval.push({
-          message: "Not a valid sketch folder",
-          path: getSketchPath(error.cmd) + "/" + getFileName(error.message),
-          line: "0",
-        });
-        continue;
+         continue;
       }
 
-      retval.push({
-        message: getMessage(error.message),
-        path: getSketchPath(error.cmd) + "/" + getFileName(error.message),
-        line: getLineNumber(error.message),
-      });
+      console.log("message: " + getMessage(error.message));
+        console.log("file: " + getFileName(error.message));
+        console.log("line: " + getLineNumber(error.message));
+        console.log("path: " + getSketchPath(error.cmd) + "/" + getFileName(error.message)); 
+      
     }
   } catch (error) {
     console.error("An error occurred:", error);
@@ -130,7 +130,7 @@ function getMessage(error) {
     return retval[5] + retval[6];
   }
   return retval[5];
-}
+
 
 module.exports = {
   ConstructAnnotationsAsync,
