@@ -130,7 +130,7 @@ function getMessage(error) {
     return retval[5] + retval[6];
   }
   return retval[5];
-
+}
 
 module.exports = {
   ConstructAnnotationsAsync,
