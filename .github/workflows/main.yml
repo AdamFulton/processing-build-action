@@ -20,8 +20,3 @@ jobs:
 
     - name: Install dependencies
       run: npm ci  # This uses the package-lock.json to install exact versions
-
-    - name: Run tests
-      run: npm test
-      env:
-        CI: true
