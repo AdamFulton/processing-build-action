@@ -1,50 +1,38 @@
+
+
 const core = require('@actions/core');
 const github = require('@actions/github');
 const fs = require('fs');
+const path = require('path');
 const { exec } = require('child_process');
 
-const sketchPath = './project_code/Thing008';
-const buildCommand = `processing-java > ./project_code/build.txt`;
 
 
 
 const projectInputPath = core.getInput('path-input');
+
 const errorArray = [];
 
-let data = ""
+
 
 const rootPath = './project_code';
 
-exec(buildCommand, (error, stdout, stderr) => {
-    if (error) {
-      console.error(`Error: ${error.message}`);
-      return;
-    }
-  
-    console.log(`stdout: ${stdout}`);
-    console.error(`stderr: ${stderr}`);
-  });
 
-fs.readdir(rootPath, (err, files) => {
-  if (err) {
-    console.error('Error reading directory:', err);
-    return;
+function findFiles(dir,path,pdeFiles = []) {
+
+  const files = fs.readdirSync(path.join(path, dir));
+
+  for (const file of files) {
+      const filePath = path.join(dir, file);
+      const stats = fs.statSync(path.join(parentPath, filePath));
+      if (stats.isDirectory()) {
+          pdeFiles(filePath, parentPath, pdeFiles);
+      } else if (file.endsWith('.pde')) {
+          pdeFiles.push(path.join(parentPath, dir));
+      }
   }
-
-  console.log('Files in the root directory:');
-  files.forEach(file => {
-    console.log(file);
-  });
-});
-
-  //  if (!data.includes("Finished")) {
-  
-  //  errorArray.push(getFileName(data));
-    //errorArray.push(getLineNumber(data));
-   // errorArray.push(getMessage(data));
-   // createAnnotations(errorArray, projectInputPath);
-  //  }
-  
+  return pdeFiles;
+}
    
 async function createAnnotations(errors, filePath) {
 

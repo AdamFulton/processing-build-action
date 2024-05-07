@@ -4,7 +4,9 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "start": "node test.js"
+    "start": "node src/processingHelper.js",
+    "test": "jest"
+
   },
   "author": "",
   "license": "ISC",
