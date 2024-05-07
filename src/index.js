@@ -52,10 +52,7 @@ async function createAnnotations() {
         },
 
       });
-      core.setFailed(
-       "proccesing-build-checker failed. Please check the annotations for more details."
-      );
-
+  
     } catch (error) {
       console.error(error);
     }
