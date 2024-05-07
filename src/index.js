@@ -1,6 +1,6 @@
 const core = require("@actions/core");
 const github = require("@actions/github");
-const { constructAnnotationsAsync } = require("./processingHelper.js");
+const {ConstructAnnotationsAsync} = require("./processingHelper.js");
 
 const projectInputPath = core.getInput("path-input");
 
@@ -13,7 +13,7 @@ createAnnotations();
  * @throws {Error} - Throws an error if the build process fails
  */
 async function createAnnotations() {
-  let errors = await constructAnnotationsAsync(projectInputPath);
+  let errors = await ConstructAnnotationsAsync(projectInputPath);
 
   for (const error of errors) {
     try {
