@@ -75,7 +75,7 @@ async function ConstructAnnotationsAsync(rootPath) {
       }
       retval.push({
         message: getMessage(error.message),
-        path: getSketchPath(path),
+        path: getSketchPath(error.path),
         line: getLineNumber(error.message)
         }); 
       
@@ -106,7 +106,7 @@ function getLineNumber(error) {
  * @returns {string} - The path to the Processing sketch
  */
 function getSketchPath(path) {
-  retval = String(path).split("project_code/") 
+  retval = path.split("project_code/") 
   return retval[1];
 }
 
@@ -142,3 +142,5 @@ module.exports = {
   findProcessingSketches,
   buildProcessingAsync,
 };
+
+test = getSketchPath("project_code/hello")
