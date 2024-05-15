@@ -74,9 +74,6 @@ async function ConstructAnnotationsAsync(rootPath) {
       if (error.message.includes("Not a valid sketch folder")) { 
         continue;
       }
-     
-    
-
        retval.push({
         message: getMessage(error.message),
         path: path,
@@ -135,3 +132,12 @@ function getMessage(error) {
   }
   return retval[5];
 }
+module.exports = {
+  ConstructAnnotationsAsync,
+  getLineNumber,
+  getSketchPath,
+  getFileName,
+  getMessage,
+  findProcessingSketches,
+  buildProcessingAsync,
+};
