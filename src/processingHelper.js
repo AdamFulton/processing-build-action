@@ -48,7 +48,6 @@ async function buildProcessingAsync(sketches) {
     } catch (error) {
       errors.push({
         message: error.stderr,
-        cmd: error.cmd,
         path: sketch
       });
     }
@@ -74,12 +73,14 @@ async function ConstructAnnotationsAsync(rootPath) {
       if (error.message.includes("Not a valid sketch folder")) { 
         continue;
       }
-       retval.push({
+      retval.push({
         message: getMessage(error.message),
         path: getSketchPath(path),
         line: getLineNumber(error.message)
         }); 
       
+      
+
     }
   } catch (error) {
     console.error("An error occurred:", error);
@@ -105,7 +106,7 @@ function getLineNumber(error) {
  * @returns {string} - The path to the Processing sketch
  */
 function getSketchPath(path) {
-  retval = path.split("project_code/");
+  retval = path.split("./project_code/");
   return retval[1];
 }
 

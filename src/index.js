@@ -1,7 +1,6 @@
 const core = require("@actions/core");
 const github = require("@actions/github");
-const {ConstructAnnotationsAsync} = require("./processingHelper.js");
-
+const {ConstructAnnotationsAsync} = require("./processingHelper");
 const projectInputPath = core.getInput("path-input");
 
 createAnnotations();
