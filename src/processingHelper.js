@@ -135,5 +135,3 @@ function getMessage(error) {
   }
   return retval[5];
 }
-result = getSketchPath("/project_code/something/something/something")
-console.log(result);
