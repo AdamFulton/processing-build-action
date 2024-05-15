@@ -106,7 +106,7 @@ function getLineNumber(error) {
  * @returns {string} - The path to the Processing sketch
  */
 function getSketchPath(path) {
-  retval = split("project_code/") 
+  retval = path.split("project_code/") 
   return retval[1];
 }
 
@@ -142,5 +142,3 @@ module.exports = {
   findProcessingSketches,
   buildProcessingAsync,
 };
-
-test = getSketchPath("project_code/hello")
