@@ -41,7 +41,7 @@ async function buildProcessingAsync(sketches) {
   let errors = [];
 
   for (const sketch of sketches) {
-    const command = `processing-java --sketch=${sketch} --build`;
+    const command = `processing-java --sketch="${sketch}" --build`;
 
     try {
       await execPromise(command);
@@ -49,6 +49,7 @@ async function buildProcessingAsync(sketches) {
       errors.push({
         message: error.stderr,
         cmd: error.cmd,
+        path: sketch
       });
     }
   }
@@ -70,12 +71,15 @@ async function ConstructAnnotationsAsync(rootPath) {
     const errors = await buildProcessingAsync(files);
 
     for (const error of errors) {
-      if (error.message.includes("Not a valid sketch folder")) {
-         continue;
+      if (error.message.includes("Not a valid sketch folder")) { 
+        continue;
       }
-      retval.push({
+     
+    
+
+       retval.push({
         message: getMessage(error.message),
-        path: getSketchPath(error.cmd) + "/"+ getFileName(error.message),
+        path: path,
         line: getLineNumber(error.message)
         }); 
       
@@ -103,8 +107,8 @@ function getLineNumber(error) {
  * @param {string} cmd - The command that was run to build the Processing sketch that containts the sketch path
  * @returns {string} - The path to the Processing sketch
  */
-function getSketchPath(cmd) {
-  retval = cmd.split("--sketch=")[1].split(" ")[0].split("project_code/");
+function getSketchPath(path) {
+  retval = path.split("project_code/");
   return retval[1];
 }
 
@@ -131,13 +135,5 @@ function getMessage(error) {
   }
   return retval[5];
 }
-
-module.exports = {
-  ConstructAnnotationsAsync,
-  getLineNumber,
-  getSketchPath,
-  getFileName,
-  getMessage,
-  findProcessingSketches,
-  buildProcessingAsync,
-};
+result = getSketchPath("/project_code/something/something/something")
+console.log(result);
