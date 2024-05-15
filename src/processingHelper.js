@@ -41,7 +41,6 @@ async function buildProcessingAsync(sketches) {
   let errors = [];
 
   for (const sketch of sketches) {
-    console.log("Building sketch:", sketch)
     const command = `processing-java --sketch="${sketch}" --build`;
 
     try {
@@ -76,7 +75,7 @@ async function ConstructAnnotationsAsync(rootPath) {
       }
       retval.push({
         message: getMessage(error.message),
-        path: getSketchPath(error.path),
+        path: getSketchPath(error.path) + "/" + getFileName(error.message),
         line: getLineNumber(error.message)
         }); 
       
@@ -106,10 +105,11 @@ function getLineNumber(error) {
  * @param {string} cmd - The command that was run to build the Processing sketch that containts the sketch path
  * @returns {string} - The path to the Processing sketch
  */
-function getSketchPath(cmd) {
-  retval = cmd.split("--sketch=")[1].split(" ");
-  return retval[0];
+function getSketchPath(path) {
+  retval = split("project_code/") 
+  return retval[1];
 }
+
 /**
  * Parses the error message from the processing-java command to extract the file name
  * @param {string} error - The error message from the processing-java command
@@ -142,3 +142,5 @@ module.exports = {
   findProcessingSketches,
   buildProcessingAsync,
 };
+
+test = getSketchPath("project_code/hello")
