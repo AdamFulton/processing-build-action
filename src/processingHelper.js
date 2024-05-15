@@ -76,7 +76,7 @@ async function ConstructAnnotationsAsync(rootPath) {
       }
        retval.push({
         message: getMessage(error.message),
-        path: path,
+        path: getSketchPath(path),
         line: getLineNumber(error.message)
         }); 
       
